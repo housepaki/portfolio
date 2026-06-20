@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Pasquale Lucarelli — Portfolio</title>
-    <meta name="description" content="UX/UI Designer. Focalizzato sulla purezza estetica e sulla funzionalità editoriale.">
+    <meta name="description" content="UX/UI Designer e Product Designer. Progetto interfacce che funzionano — dalla ricerca utente al rilascio in produzione.">
 
     <!-- Open Graph -->
     <meta property="og:url" content="https://palale858-create.github.io/portfolio/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Pasquale Lucarelli — Portfolio">
-    <meta property="og:description" content="UX/UI Designer. Focalizzato sulla purezza estetica e sulla funzionalità editoriale.">
+    <meta property="og:description" content="UX/UI Designer e Product Designer. Progetto interfacce che funzionano — dalla ricerca utente al rilascio in produzione.">
     <meta property="og:image" content="https://palale858-create.github.io/portfolio/assets/img/png/meta-tag.png">
 
     <!-- Twitter -->
@@ -19,7 +19,7 @@
     <meta property="twitter:domain" content="palale858-create.github.io">
     <meta property="twitter:url" content="https://palale858-create.github.io/portfolio/">
     <meta name="twitter:title" content="Pasquale Lucarelli — Portfolio">
-    <meta name="twitter:description" content="UX/UI Designer. Focalizzato sulla purezza estetica e sulla funzionalità editoriale.">
+    <meta name="twitter:description" content="UX/UI Designer e Product Designer. Progetto interfacce che funzionano — dalla ricerca utente al rilascio in produzione.">
     <meta name="twitter:image" content="https://palale858-create.github.io/portfolio/assets/img/png/meta-tag.png">
 
     <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico">
@@ -66,23 +66,25 @@
       </section>
 
       <section class="section">
-        <div class="project-media">
+        <a href="orizon.html" class="project-media">
           <img src="assets/img/jpg/orizon2.jpg" alt="Orizon">
           <div class="project-info">
-            <span class="project-category">01 — Travel Experience</span>
+            <span class="project-category">01 — Brand Identity · 2025</span>
             <h2 class="project-title">ORIZON</h2>
+            <p class="project-desc">Brand identity per agenzia di viaggi sostenibili e rigenerativi</p>
           </div>
-        </div>
+        </a>
       </section>
 
       <section class="section">
-        <div class="project-media">
+        <a href="lsmc.html" class="project-media">
           <img src="assets/img/jpg/lsmc.jpg" alt="LSMC">
           <div class="project-info">
-            <span class="project-category">02 — Application</span>
+            <span class="project-category">02 — UX Redesign · 2025</span>
             <h2 class="project-title">LSMC</h2>
+            <p class="project-desc">Analisi e redesign per piattaforma anti-spreco alimentare</p>
           </div>
-        </div>
+        </a>
       </section>
 
       <section class="section">
@@ -93,16 +95,26 @@
           <div class="project-info">
             <span class="project-category">03 — Product Design · App</span>
             <h2 class="project-title">MOVE</h2>
+            <p class="project-desc">App in produzione — eventi reali nelle città italiane</p>
           </div>
         </a>
       </section>
 
     </main>
 
+    <!-- SCROLL HINT (mobile only) -->
+    <div class="scroll-hint" id="scroll-hint">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M7 1v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>SCORRI</span>
+    </div>
+
     <!-- OVERLAY CONTATTI -->
     <div id="contact-overlay" class="custom-overlay">
       <div class="minimal-form">
-        <h2 style="font-size: clamp(2rem, 5vw, 4rem); font-weight: 800; margin-bottom: 60px; letter-spacing: -0.04em;">Parliamone.</h2>
+        <h2 style="font-size: clamp(2rem, 5vw, 4rem); font-weight: 800; margin-bottom: 12px; letter-spacing: -0.04em;">Parliamone.</h2>
+        <p style="font-size: 0.82rem; color: #999; margin-bottom: 52px;">Oppure scrivimi direttamente: <a href="mailto:pa.lale99@hotmail.com" style="color:#000; border-bottom: 1px solid rgba(0,0,0,0.2); text-decoration:none; transition: border-color 0.2s;" onmouseover="this.style.borderColor='#000'" onmouseout="this.style.borderColor='rgba(0,0,0,0.2)'">pa.lale99@hotmail.com</a></p>
         <form onsubmit="handleForm(event)">
           <div class="row">
             <div class="col-md-6">
@@ -140,14 +152,26 @@
 
       function handleForm(e) {
         e.preventDefault();
-        const btn = e.target.querySelector('.submit-btn');
-        btn.innerHTML = "INVIATO CON SUCCESSO.";
+        const form = e.target;
+        const name = form.querySelector('input[type="text"]').value;
+        const email = form.querySelector('input[type="email"]').value;
+        const message = form.querySelector('textarea').value;
+        const subject = encodeURIComponent('Portfolio — Messaggio da ' + name);
+        const body = encodeURIComponent('Nome: ' + name + '\nEmail: ' + email + '\n\nMessaggio:\n' + message);
+        window.open('mailto:pa.lale99@hotmail.com?subject=' + subject + '&body=' + body);
+        const btn = form.querySelector('.submit-btn');
+        btn.innerHTML = "APERTURA EMAIL...";
         setTimeout(() => {
           closeOverlays();
-          e.target.reset();
+          form.reset();
           btn.innerHTML = "INVIA MESSAGGIO →";
         }, 2000);
       }
+
+      document.querySelector('main')?.addEventListener('scroll', function() {
+        const hint = document.getElementById('scroll-hint');
+        if (hint) hint.style.display = 'none';
+      }, { once: true });
     </script>
 
   </body>
