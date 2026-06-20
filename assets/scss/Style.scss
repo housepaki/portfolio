@@ -585,14 +585,14 @@ main {
 .section:hover .move-waveform path:nth-child(3) { opacity: 0.18; }
 
 // ─────────────────────────────────────────────────────────
-// 12. WRAPPER LINK per project card
+// 12. <a> usato come project card (MOVE)
 // ─────────────────────────────────────────────────────────
-.project-media-link {
-  display: block;
-  width: 90%;
+a.project-media {
   text-decoration: none;
+  display: block;
 
-  .project-media { width: 100%; }
+  .project-title,
+  .project-category { color: white; }
 }
 
 // ─────────────────────────────────────────────────────────
