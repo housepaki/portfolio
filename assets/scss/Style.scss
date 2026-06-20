@@ -719,11 +719,12 @@ body.case-study-page {
 .cs-overview {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  padding: 0 8vw;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .cs-overview-item {
-  padding: 32px 24px 32px 0;
+  padding: 32px 16px 32px 0;
   border-right: 1px solid rgba(0, 0, 0, 0.07);
   margin-left: 8vw;
 
@@ -741,7 +742,7 @@ body.case-study-page {
 
 .cs-overview-val { font-size: 0.88rem; font-weight: 500; letter-spacing: -0.01em; }
 
-.cs-body { padding: 80px 8vw; max-width: 1200px; }
+.cs-body { padding: 80px 8vw; }
 .cs-block { margin-bottom: 80px; }
 
 .cs-label {
@@ -782,6 +783,13 @@ body.case-study-page {
   font-size: 0.65rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  margin: 0 0 28px 0;
+}
+.cs-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
   margin: 0 0 28px 0;
 }
 
@@ -945,8 +953,8 @@ body.case-study-page {
   }
 
   // Case study mobile
-  .cs-overview { grid-template-columns: 1fr 1fr; }
-  .cs-overview-item { margin-left: 5vw; padding-right: 5vw; padding-top: 20px; padding-bottom: 20px; }
+  .cs-overview { grid-template-columns: 1fr 1fr; padding: 0 5vw; }
+  .cs-overview-item { padding: 20px 12px 20px 0; }
   .cs-overview-item:nth-child(2) { border-right: none; }
   .cs-overview-item:nth-child(3) { border-right: 1px solid rgba(0,0,0,0.07); }
   .cs-hero { height: 60vh; }

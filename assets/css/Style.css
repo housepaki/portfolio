@@ -565,8 +565,8 @@ a.project-media .project-category {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  .cs-overview { grid-template-columns: 1fr 1fr; }
-  .cs-overview-item { margin-left: 5vw; padding-right: 5vw; padding-top: 20px; padding-bottom: 20px; }
+  .cs-overview { grid-template-columns: 1fr 1fr; padding: 0 5vw; }
+  .cs-overview-item { padding: 20px 12px 20px 0; }
   .cs-overview-item:nth-child(2) { border-right: none; }
   .cs-overview-item:nth-child(3) { border-right: 1px solid rgba(0,0,0,0.07); }
   .cs-hero { height: 60vh; }
@@ -685,11 +685,11 @@ body.case-study-page header .top-link { color: #000000 !important; }
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 0 8vw;
 }
 .cs-overview-item {
-  padding: 32px 24px 32px 0;
+  padding: 32px 16px 32px 0;
   border-right: 1px solid rgba(0, 0, 0, 0.07);
-  margin-left: 8vw;
 }
 .cs-overview-item:last-child { border-right: none; }
 .cs-overview-label {
@@ -705,7 +705,7 @@ body.case-study-page header .top-link { color: #000000 !important; }
   font-weight: 500;
   letter-spacing: -0.01em;
 }
-.cs-body { padding: 80px 8vw; max-width: 1200px; }
+.cs-body { padding: 80px 8vw; }
 .cs-block { margin-bottom: 80px; }
 .cs-label {
   font-size: 0.58rem;
@@ -744,6 +744,13 @@ body.case-study-page header .top-link { color: #000000 !important; }
   font-size: 0.65rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  margin: 0 0 28px 0;
+}
+.cs-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
   margin: 0 0 28px 0;
 }
 .cs-grid-2 {
