@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MOVE — Case Study · Pasquale Lucarelli</title>
+    <meta name="description" content="Come ho progettato e lanciato MOVE, un'app in beta pubblica per giovani adulti italiani — dalla ricerca utente al rilascio in produzione.">
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/Style.css">
+
+    <style>
+      /* Token colori MOVE */
+      .move-accent  { color: #4ECDC4; }
+      .move-eco     { color: #6A9E6F; }
+      .move-soc     { color: #5B8DEF; }
+      .move-ben     { color: #E8A87C; }
+      .move-cre     { color: #9B7EC8; }
+
+      /* Sezione scura (hero + system design) */
+      .cs-dark {
+        background: #0a0a0a;
+        color: #f0f0f0;
+      }
+      .cs-dark .cs-hero-overlay {
+        background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.5) 55%, transparent 100%);
+      }
+
+      /* Stats strip */
+      .move-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 0 0 28px 0;
+      }
+      .move-stat {
+        padding: 28px 20px;
+        background: #141414;
+        border-right: 1px solid rgba(255,255,255,.08);
+      }
+      .move-stat:last-child { border-right: none; }
+      .move-stat-val {
+        font-size: clamp(1.8rem, 3.5vw, 3rem);
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        line-height: 1;
+        color: #4ECDC4;
+        margin-bottom: 8px;
+      }
+      .move-stat-lbl {
+        font-size: 0.7rem;
+        color: #6B7280;
+        line-height: 1.4;
+      }
+      @media (max-width: 680px) {
+        .move-stats { grid-template-columns: 1fr 1fr; }
+        .move-stat:nth-child(2) { border-right: none; }
+        .move-stat:nth-child(3) { border-right: 1px solid rgba(255,255,255,.08); border-top: 1px solid rgba(255,255,255,.08); }
+        .move-stat:nth-child(4) { border-top: 1px solid rgba(255,255,255,.08); }
+      }
+
+      /* Categorie missioni */
+      .move-cats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin: 0 0 28px 0;
+      }
+      .move-cat {
+        padding: 20px 16px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,.08);
+        background: #141414;
+      }
+      .move-cat-icon { font-size: 1.4rem; margin-bottom: 8px; }
+      .move-cat-name { font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; }
+      .move-cat-count { font-size: 0.65rem; color: #6B7280; }
+      @media (max-width: 680px) { .move-cats { grid-template-columns: 1fr 1fr; } }
+
+      /* Pattern pill list */
+      .move-patterns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0 0 28px 0;
+      }
+      .move-pattern {
+        padding: 5px 14px;
+        background: #141414;
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 20px;
+        font-size: 0.68rem;
+        color: #9CA3AF;
+        font-weight: 500;
+      }
+
+      /* Scoring levels */
+      .move-scoring {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 0 0 28px 0;
+      }
+      .move-score-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 18px;
+        background: #141414;
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 8px;
+      }
+      .move-score-pts {
+        font-size: 1.1rem;
+        font-weight: 900;
+        color: #4ECDC4;
+        min-width: 36px;
+      }
+      .move-score-label { font-size: 0.78rem; font-weight: 600; color: #f0f0f0; }
+      .move-score-desc  { font-size: 0.72rem; color: #6B7280; margin-top: 2px; }
+
+      /* Design system palette */
+      .move-palette {
+        display: flex;
+        gap: 12px;
+        margin: 0 0 28px 0;
+        flex-wrap: wrap;
+      }
+      .move-swatch {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        position: relative;
+      }
+      .move-swatch-label {
+        margin-top: 6px;
+        font-size: 0.55rem;
+        color: #6B7280;
+        letter-spacing: 0.06em;
+      }
+
+      /* cs-text in dark context */
+      .cs-dark .cs-text { color: #9CA3AF; }
+      .cs-dark .cs-h2 { color: #f0f0f0; }
+      .cs-dark .cs-label { color: #6B7280; }
+      .cs-dark .cs-card { background: #141414; border-color: rgba(255,255,255,.08); }
+      .cs-dark .cs-card-title { color: #f0f0f0; }
+      .cs-dark .cs-card-text { color: #6B7280; }
+
+      /* Live badge */
+      .move-live-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 14px 5px 10px;
+        background: rgba(78,205,196,.12);
+        border: 1px solid rgba(78,205,196,.25);
+        border-radius: 20px;
+        font-size: 0.58rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        color: #4ECDC4;
+        margin-bottom: 20px;
+      }
+      .move-live-badge::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #4ECDC4;
+        animation: pulse-dot 2s ease-in-out infinite;
+      }
+
+      /* External link btn */
+      .cs-external-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: #4ECDC4;
+        color: #0a0a0a;
+        border-radius: 50px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-decoration: none;
+        transition: opacity 0.2s;
+        margin-top: 8px;
+      }
+      .cs-external-btn:hover { opacity: 0.85; color: #0a0a0a; }
+    </style>
+  </head>
+
+  <body class="case-study-page">
+
+    <header>
+      <a href="index.html" class="brand">PASQUALE LUCARELLI</a>
+      <nav>
+        <a href="index.html" class="top-link">← PORTFOLIO</a>
+        <a href="curriculum.html" class="top-link">CURRICULUM</a>
+      </nav>
+    </header>
+
+    <div class="cs-main">
+
+      <!-- Hero -->
+      <div class="cs-hero cs-dark">
+        <img src="assets/img/jpg/move.jpg" alt="MOVE — Product Design">
+        <div class="cs-hero-overlay">
+          <div class="move-live-badge">LIVE · BETA PUBBLICA</div>
+          <span class="cs-hero-tag">Product Design · App · 2025–presente</span>
+          <h1 class="cs-hero-title">MOVE</h1>
+          <p class="cs-hero-subtitle">Dall'ideazione al rilascio in produzione — un'app per giovani adulti italiani che vogliono muoversi davvero.</p>
+        </div>
+      </div>
+
+      <!-- Overview -->
+      <div class="cs-overview" style="background:#0a0a0a; border-bottom: 1px solid rgba(255,255,255,.08);">
+        <div class="cs-overview-item" style="border-color: rgba(255,255,255,.08);">
+          <span class="cs-overview-label" style="color:#6B7280;">Ruolo</span>
+          <span class="cs-overview-val" style="color:#f0f0f0;">Product Designer &amp; Founder</span>
+        </div>
+        <div class="cs-overview-item" style="border-color: rgba(255,255,255,.08);">
+          <span class="cs-overview-label" style="color:#6B7280;">Anno</span>
+          <span class="cs-overview-val" style="color:#f0f0f0;">2025–presente</span>
+        </div>
+        <div class="cs-overview-item" style="border-color: rgba(255,255,255,.08);">
+          <span class="cs-overview-label" style="color:#6B7280;">Tipo</span>
+          <span class="cs-overview-val" style="color:#f0f0f0;">Mobile App · PWA</span>
+        </div>
+        <div class="cs-overview-item" style="border-color: rgba(255,255,255,.08);">
+          <span class="cs-overview-label" style="color:#6B7280;">Stack</span>
+          <span class="cs-overview-val" style="color:#f0f0f0;">React · Supabase · Vercel</span>
+        </div>
+      </div>
+
+      <!-- Dark body -->
+      <div class="cs-dark" style="padding: 0;">
+      <div class="cs-body">
+
+        <!-- Il problema -->
+        <div class="cs-block">
+          <span class="cs-label">Punto di partenza</span>
+          <h2 class="cs-h2">I giovani italiani stanno male.<br>Il mercato lo ignora.</h2>
+          <p class="cs-text">Nessun prodotto serio esiste per il mercato italiano. Le app di wellbeing internazionali non parlano la lingua culturale di chi ha 22 anni a Bari o 26 a Napoli. Ho cercato una soluzione — non l'ho trovata. L'ho costruita.</p>
+
+          <div class="move-stats">
+            <div class="move-stat">
+              <div class="move-stat-val" style="color:#5B8DEF">57%</div>
+              <div class="move-stat-lbl">dei giovani europei si sente solo, anche se connesso</div>
+            </div>
+            <div class="move-stat">
+              <div class="move-stat-val" style="color:#E8A87C">15.2%</div>
+              <div class="move-stat-lbl">NEET in Italia — il doppio della media EU Nord</div>
+            </div>
+            <div class="move-stat">
+              <div class="move-stat-val" style="color:#9B7EC8">80%</div>
+              <div class="move-stat-lbl">dei 20-29enni vive con i genitori. Non per scelta.</div>
+            </div>
+            <div class="move-stat">
+              <div class="move-stat-val" style="color:#4ECDC4">70%</div>
+              <div class="move-stat-lbl">dei giovani ha eco-ansia che interferisce col quotidiano</div>
+            </div>
+          </div>
+
+          <p class="cs-text" style="font-size:0.7rem; color:#4B5563; margin-top:-12px;">Fonti: Eurostat 2024, ISTAT 2024, Lancet 2021 / APA 2023</p>
+        </div>
+
+        <!-- Research -->
+        <div class="cs-block">
+          <span class="cs-label">Ricerca</span>
+          <h2 class="cs-h2">17 pattern, non 17 categorie demografiche</h2>
+          <p class="cs-text">La ricerca qualitativa sugli utenti ha rivelato che i problemi dei giovani adulti non si descrivono bene con l'età o il reddito. Si descrivono con pattern situazionali specifici.</p>
+          <p class="cs-text">Ho identificato 17 configurazioni ricorrenti che emergono dall'incrocio di lavoro, casa, vita sociale e blocchi psicologici. MOVE usa questi pattern per personalizzare ogni raccomandazione.</p>
+
+          <div class="move-patterns">
+            <span class="move-pattern">Burnout digitale</span>
+            <span class="move-pattern">Isolamento invisibile</span>
+            <span class="move-pattern">Deriva economica</span>
+            <span class="move-pattern">Crisi abitativa</span>
+            <span class="move-pattern">Eco-ansia paralizzante</span>
+            <span class="move-pattern">NEET in ritiro</span>
+            <span class="move-pattern">Dipendenza digitale</span>
+            <span class="move-pattern">Profilo dual-burden</span>
+            <span class="move-pattern">Pressione familiare max</span>
+            <span class="move-pattern">Isolamento da identità</span>
+            <span class="move-pattern">Urgenza relazione tossica</span>
+            <span class="move-pattern">Dipendenza acuta</span>
+            <span class="move-pattern">Deriva senza scopo</span>
+            <span class="move-pattern">Creativo bloccato</span>
+            <span class="move-pattern">Lavoratore svuotato</span>
+            <span class="move-pattern">Trasferito senza rete</span>
+            <span class="move-pattern">Attivista in burnout</span>
+          </div>
+        </div>
+
+        <!-- Onboarding -->
+        <div class="cs-block">
+          <span class="cs-label">Onboarding</span>
+          <h2 class="cs-h2">Profilo in 3 minuti.<br>Nessun giudizio.</h2>
+          <p class="cs-text">L'onboarding è la prima prova che MOVE fa sul serio. Non chiede interessi generici — chiede la situazione reale: lavoro, casa, vita sociale, blocchi, dipendenze. 10 domande, ~3 minuti, tono diretto e privo di giudizi.</p>
+          <p class="cs-text">Ogni risposta alimenta il motore di personalizzazione. Le aree coperte:</p>
+
+          <div class="cs-grid-2">
+            <div class="cs-card">
+              <p class="cs-card-title">Mood &amp; Benessere</p>
+              <p class="cs-card-text">Slider continuo che mappa il benessere percepito. Pesa dinamicamente le raccomandazioni nelle 4 aree vita.</p>
+            </div>
+            <div class="cs-card">
+              <p class="cs-card-title">Vita sociale &amp; Blocchi</p>
+              <p class="cs-card-text">Isolamento, dipendenze, blocco principale percepito (lavoro, socialità, direzione, salute). Attiva le urgency tier critiche.</p>
+            </div>
+            <div class="cs-card">
+              <p class="cs-card-title">Skill &amp; Obiettivo</p>
+              <p class="cs-card-text">Cosa sai fare, cosa vuoi raggiungere. Usato per il matching con altri utenti e per il ranking missioni Economica/Crescita.</p>
+            </div>
+            <div class="cs-card">
+              <p class="cs-card-title">Casa &amp; Città</p>
+              <p class="cs-card-text">Situazione abitativa (genitori, co-housing, solo) e città. Abilita missioni abitative + filtraggio eventi locali.</p>
+            </div>
+          </div>
+
+          <div class="cs-image-slot" style="height: 380px;">
+            [ screenshot schermate onboarding Figma ]
+          </div>
+        </div>
+
+        <!-- Sistema missioni -->
+        <div class="cs-block">
+          <span class="cs-label">Sistema missioni</span>
+          <h2 class="cs-h2">73+ missioni.<br>Scoring a 3 livelli.</h2>
+          <p class="cs-text">Le missioni non sono consigli generici — sono azioni concrete abbinate al profilo tramite un algoritmo di scoring a tre livelli di rilevanza.</p>
+
+          <div class="move-scoring">
+            <div class="move-score-row">
+              <div class="move-score-pts">+3</div>
+              <div>
+                <div class="move-score-label">Tag Problema</div>
+                <div class="move-score-desc">Corrisponde direttamente al blocco principale dell'utente. Peso massimo.</div>
+              </div>
+            </div>
+            <div class="move-score-row">
+              <div class="move-score-pts">+2</div>
+              <div>
+                <div class="move-score-label">Tag Contesto</div>
+                <div class="move-score-desc">Rispecchia la situazione di vita (casa, lavoro, isolamento). Peso intermedio.</div>
+              </div>
+            </div>
+            <div class="move-score-row">
+              <div class="move-score-pts">+1</div>
+              <div>
+                <div class="move-score-label">Tag Azione</div>
+                <div class="move-score-desc">Allineato al tipo di attività preferita. Peso di base.</div>
+              </div>
+            </div>
+          </div>
+
+          <p class="cs-text">Sopra lo scoring: 7 urgency tier che pinnano missioni specifiche in cima per situazioni critiche (dipendenza acuta, relazione tossica, NEET con isolamento). Il motore riconosce le combinazioni AND multi-risposta e genera tag ultra-specifici per i profili più complessi.</p>
+
+          <div class="move-cats">
+            <div class="move-cat">
+              <div class="move-cat-icon">💼</div>
+              <div class="move-cat-name move-eco">Economica</div>
+              <div class="move-cat-count">Lavoro, finanze, indipendenza</div>
+            </div>
+            <div class="move-cat">
+              <div class="move-cat-icon">🤝</div>
+              <div class="move-cat-name move-soc">Sociale</div>
+              <div class="move-cat-count">Connessioni, eventi, comunità</div>
+            </div>
+            <div class="move-cat">
+              <div class="move-cat-icon">☀️</div>
+              <div class="move-cat-name move-ben">Benessere</div>
+              <div class="move-cat-count">Salute mentale, routine, corpo</div>
+            </div>
+            <div class="move-cat">
+              <div class="move-cat-icon">✍️</div>
+              <div class="move-cat-name move-cre">Crescita</div>
+              <div class="move-cat-count">Scopo, identità, ambiente</div>
+            </div>
+          </div>
+
+          <div class="cs-image-slot" style="height: 420px;">
+            [ screenshot dashboard missioni + scheda missione ]
+          </div>
+        </div>
+
+        <!-- Features -->
+        <div class="cs-block">
+          <span class="cs-label">Features chiave</span>
+          <h2 class="cs-h2">Oltre le missioni.</h2>
+
+          <div class="cs-grid-2">
+            <div class="cs-card">
+              <p class="cs-card-title">🗓️ Eventi reali · 51 città</p>
+              <p class="cs-card-text">1.142+ eventi aggiornati ogni notte da PredictHQ API: concerti, talk, workshop, sport. Filtri per data, distanza e categoria. Solo gli eventi più rilevanti per il profilo in cima.</p>
+            </div>
+            <div class="cs-card">
+              <p class="cs-card-title">🤝 Connessioni per valore</p>
+              <p class="cs-card-text">Matching basato su skill condivise, missioni in comune e obiettivi. Chat 1-a-1. Niente swipe — solo persone reali con cose in comune.</p>
+            </div>
+            <div class="cs-card">
+              <p class="cs-card-title">📊 Radar 4 aree</p>
+              <p class="cs-card-text">Dashboard con radar chart che legge il profilo e mostra dove sei. Check-in giornaliero, streak, XP. Progresso misurabile, non intenzioni.</p>
+            </div>
+            <div class="cs-card">
+              <p class="cs-card-title">🔔 Notifiche smart</p>
+              <p class="cs-card-text">Generate al login: streak a rischio, inattività, milestone XP, promemoria missioni dipendenza/salute. Contestuali al pattern dell'utente.</p>
+            </div>
+          </div>
+
+          <div class="cs-image-slot" style="height: 380px;">
+            [ screenshot dashboard · eventi · connessioni ]
+          </div>
+        </div>
+
+        <!-- Design system -->
+        <div class="cs-block">
+          <span class="cs-label">Design System</span>
+          <h2 class="cs-h2">Dark, per scelta.<br>Non per trend.</h2>
+          <p class="cs-text">La maggior parte delle app di wellbeing è bianca, pastel, rassicurante. MOVE no. Il dark mode è una scelta di posizionamento: MOVE non è una app di meditazione guidata. È strumentale, densa, seria. Il design deve dirlo al primo sguardo.</p>
+
+          <div class="move-palette">
+            <div>
+              <div class="move-swatch" style="background:#0a0a0a; border: 1px solid rgba(255,255,255,.12);"></div>
+              <div class="move-swatch-label">#0a0a0a<br>Background</div>
+            </div>
+            <div>
+              <div class="move-swatch" style="background:#141414;"></div>
+              <div class="move-swatch-label">#141414<br>Surface</div>
+            </div>
+            <div>
+              <div class="move-swatch" style="background:#4ECDC4;"></div>
+              <div class="move-swatch-label">#4ECDC4<br>Accent</div>
+            </div>
+            <div>
+              <div class="move-swatch" style="background:#6A9E6F;"></div>
+              <div class="move-swatch-label">#6A9E6F<br>Economica</div>
+            </div>
+            <div>
+              <div class="move-swatch" style="background:#5B8DEF;"></div>
+              <div class="move-swatch-label">#5B8DEF<br>Sociale</div>
+            </div>
+            <div>
+              <div class="move-swatch" style="background:#E8A87C;"></div>
+              <div class="move-swatch-label">#E8A87C<br>Benessere</div>
+            </div>
+            <div>
+              <div class="move-swatch" style="background:#9B7EC8;"></div>
+              <div class="move-swatch-label">#9B7EC8<br>Crescita</div>
+            </div>
+          </div>
+
+          <div class="cs-grid-2">
+            <div class="cs-card">
+              <p class="cs-card-title">Tipografia</p>
+              <p class="cs-card-text">Inter per il corpo (leggibilità su dark), Satoshi per titoli e logo (carattere con personalità, condensed e geometrico).</p>
+            </div>
+            <div class="cs-card">
+              <p class="cs-card-title">Colori per categoria</p>
+              <p class="cs-card-text">Ogni area vita ha un colore dedicato, usato coerentemente su card, icone e pill. Il radar chart rispecchia la stessa palette.</p>
+            </div>
+          </div>
+
+          <div class="cs-image-slot" style="height: 380px;">
+            [ screenshot design system: componenti, card missione, pill, radar ]
+          </div>
+        </div>
+
+        <!-- Lancio e stato -->
+        <div class="cs-block">
+          <span class="cs-label">Lancio</span>
+          <h2 class="cs-h2">PWA. Nessuno store.<br>Subito installabile.</h2>
+          <p class="cs-text">MOVE è una Progressive Web App — si installa da Safari o Chrome come un'app nativa, funziona offline e si aggiorna automaticamente. Nessun passaggio dagli store, nessuna attesa. Questa scelta abbatte il friction di onboarding.</p>
+
+          <div class="cs-grid-2">
+            <div class="cs-card">
+              <p class="cs-card-title">Frontend</p>
+              <p class="cs-card-text">React con Babel transpilato a runtime — nessun build step, deploy istantaneo. Hostato su Vercel con rewrite per /app.</p>
+            </div>
+            <div class="cs-card">
+              <p class="cs-card-title">Backend</p>
+              <p class="cs-card-text">Supabase per autenticazione email+password, database utenti e sincronizzazione dati. Supabase è la sorgente di verità — localStorage è solo cache di avvio.</p>
+            </div>
+            <div class="cs-card">
+              <p class="cs-card-title">Dati eventi</p>
+              <p class="cs-card-text">Bot automatizzato che aggiorna events.json ogni notte da PredictHQ API. 51 città italiane, senza intervento manuale.</p>
+            </div>
+            <div class="cs-card">
+              <p class="cs-card-title">Stato attuale</p>
+              <p class="cs-card-text">Beta pubblica aperta. Utenti reali, eventi reali nelle principali città italiane. Fase early-stage in crescita attiva.</p>
+            </div>
+          </div>
+
+          <div style="margin-top: 32px;">
+            <a href="http://joinmove.it/" target="_blank" rel="noopener" class="cs-external-btn">
+              Apri MOVE ↗
+            </a>
+          </div>
+        </div>
+
+      </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="cs-footer">
+        <a href="index.html" class="cs-nav-link">← Torna al portfolio</a>
+        <a href="orizon.html" class="cs-nav-link">Prossimo: ORIZON →</a>
+      </div>
+
+    </div>
+
+  </body>
+</html>

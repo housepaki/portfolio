@@ -48,7 +48,7 @@
       <a href="#" class="dock-link">HOME</a>
       <div style="width:1px; height:20px; background:rgba(0,0,0,0.1);"></div>
       <a href="curriculum.html" class="dock-link">CURRICULUM</a>
-      <a href="javascript:void(0)" onclick="toggleOverlay('contact')" class="dock-link">BIO / CONTATTI</a>
+      <a href="javascript:void(0)" onclick="toggleOverlay('bio')" class="dock-link">BIO / CONTATTI</a>
     </nav>
 
     <main>
@@ -88,12 +88,11 @@
       </section>
 
       <section class="section">
-        <a href="http://joinmove.it/" target="_blank" rel="noopener"
-           class="project-media project-media--move">
+        <a href="move.html" class="project-media project-media--move">
           <img src="assets/img/jpg/move.jpg" alt="MOVE">
           <span class="project-badge">LIVE</span>
           <div class="project-info">
-            <span class="project-category">03 — Product Design · App</span>
+            <span class="project-category">03 — Product Design · App · 2025</span>
             <h2 class="project-title">MOVE</h2>
             <p class="project-desc">App in produzione — eventi reali nelle città italiane</p>
           </div>
@@ -101,6 +100,24 @@
       </section>
 
     </main>
+
+    <!-- OVERLAY BIO -->
+    <div id="bio-overlay" class="custom-overlay">
+      <div class="bio-wrapper">
+        <span class="bio-label">Designer di prodotto · Bari, Italia</span>
+        <h2 class="bio-name">Pasquale<br>Lucarelli.</h2>
+        <p class="bio-text">Progetto interfacce per persone reali — dalla ricerca utente al rilascio in produzione. Ho fondato <strong>MOVE</strong>, un'app in beta pubblica per giovani adulti italiani, e lavoro su brand identity, UX redesign e product design.</p>
+        <div class="bio-actions">
+          <button class="bio-contact-btn" onclick="closeOverlays(); setTimeout(() => toggleOverlay('contact'), 50)">SCRIVIMI →</button>
+          <a href="https://www.linkedin.com/in/pasquale-lucarelli-a5b2b82a2" target="_blank" rel="noopener" class="bio-link">LINKEDIN ↗</a>
+          <a href="https://github.com/housepaki" target="_blank" rel="noopener" class="bio-link">GITHUB ↗</a>
+        </div>
+        <div class="bio-available">
+          <span class="bio-dot"></span>
+          Aperto a opportunità full-time
+        </div>
+      </div>
+    </div>
 
     <!-- SCROLL HINT (mobile only) -->
     <div class="scroll-hint" id="scroll-hint">

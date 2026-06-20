@@ -792,6 +792,84 @@ body.case-study-page header .top-link { color: #000000 !important; }
 .cs-nav-link:hover { opacity: 0.5; color: #000000; }
 
 /* ─────────────────────────────────────────────────────────
+   16b. BIO OVERLAY
+   ───────────────────────────────────────────────────────── */
+.bio-wrapper {
+  width: 100%;
+  max-width: 560px;
+}
+.bio-label {
+  display: block;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #888888;
+  margin-bottom: 20px;
+}
+.bio-name {
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  margin: 0 0 36px 0;
+}
+.bio-text {
+  font-size: 1rem;
+  color: #555555;
+  line-height: 1.85;
+  font-weight: 300;
+  margin: 0 0 36px 0;
+}
+.bio-text strong { color: #000000; font-weight: 600; }
+.bio-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.bio-contact-btn {
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 14px 28px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  transition: opacity 0.2s;
+}
+.bio-contact-btn:hover { opacity: 0.7; }
+.bio-link {
+  text-decoration: none;
+  color: #000000;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 1px;
+  transition: border-color 0.2s;
+}
+.bio-link:hover { border-color: #000000; color: #000000; }
+.bio-available {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.63rem;
+  color: #aaaaaa;
+  letter-spacing: 0.06em;
+}
+.bio-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ECDC4;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────────────
    17. MOBILE PORTFOLIO
    ───────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
