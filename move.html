@@ -11,159 +11,91 @@
     <link rel="stylesheet" href="assets/css/Style.css">
 
     <style>
-      /* Token colori MOVE */
-      .move-accent  { color: #4ECDC4; }
-      .move-eco     { color: #6A9E6F; }
-      .move-soc     { color: #5B8DEF; }
-      .move-ben     { color: #E8A87C; }
-      .move-cre     { color: #9B7EC8; }
-
-      /* Sezione scura (hero + system design) */
-      .cs-dark {
-        background: #0a0a0a;
-        color: #f0f0f0;
-      }
-      .cs-dark .cs-hero-overlay {
-        background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.5) 55%, transparent 100%);
-      }
+      /* Componenti MOVE-specifici — palette light, coerente con le altre case study */
 
       /* Stats strip */
       .move-stats {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        border: 1px solid rgba(255,255,255,.08);
+        border: 1px solid rgba(0,0,0,.08);
         border-radius: 12px;
         overflow: hidden;
         margin: 0 0 28px 0;
       }
       .move-stat {
         padding: 28px 20px;
-        background: #141414;
-        border-right: 1px solid rgba(255,255,255,.08);
+        background: #fafafa;
+        border-right: 1px solid rgba(0,0,0,.08);
       }
       .move-stat:last-child { border-right: none; }
       .move-stat-val {
-        font-size: clamp(1.8rem, 3.5vw, 3rem);
+        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
         font-weight: 900;
         letter-spacing: -0.05em;
         line-height: 1;
-        color: #4ECDC4;
         margin-bottom: 8px;
       }
-      .move-stat-lbl {
-        font-size: 0.7rem;
-        color: #6B7280;
-        line-height: 1.4;
-      }
-      @media (max-width: 680px) {
-        .move-stats { grid-template-columns: 1fr 1fr; }
-        .move-stat:nth-child(2) { border-right: none; }
-        .move-stat:nth-child(3) { border-right: 1px solid rgba(255,255,255,.08); border-top: 1px solid rgba(255,255,255,.08); }
-        .move-stat:nth-child(4) { border-top: 1px solid rgba(255,255,255,.08); }
-      }
+      .move-stat-lbl { font-size: 0.7rem; color: #6B7280; line-height: 1.4; }
 
-      /* Categorie missioni */
-      .move-cats {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin: 0 0 28px 0;
-      }
-      .move-cat {
-        padding: 20px 16px;
-        border-radius: 10px;
-        border: 1px solid rgba(255,255,255,.08);
-        background: #141414;
-      }
-      .move-cat-icon { font-size: 1.4rem; margin-bottom: 8px; }
-      .move-cat-name { font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; }
-      .move-cat-count { font-size: 0.65rem; color: #6B7280; }
-      @media (max-width: 680px) { .move-cats { grid-template-columns: 1fr 1fr; } }
-
-      /* Pattern pill list */
-      .move-patterns {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin: 0 0 28px 0;
-      }
+      /* Pattern pills */
+      .move-patterns { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px 0; }
       .move-pattern {
         padding: 5px 14px;
-        background: #141414;
-        border: 1px solid rgba(255,255,255,.08);
+        background: #f4f4f4;
+        border: 1px solid rgba(0,0,0,.08);
         border-radius: 20px;
         font-size: 0.68rem;
-        color: #9CA3AF;
+        color: #4B5563;
         font-weight: 500;
       }
 
-      /* Scoring levels */
-      .move-scoring {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin: 0 0 28px 0;
-      }
+      /* Scoring rows */
+      .move-scoring { display: flex; flex-direction: column; gap: 10px; margin: 0 0 28px 0; }
       .move-score-row {
         display: flex;
         align-items: center;
         gap: 16px;
         padding: 14px 18px;
-        background: #141414;
-        border: 1px solid rgba(255,255,255,.08);
+        background: #fafafa;
+        border: 1px solid rgba(0,0,0,.07);
         border-radius: 8px;
       }
-      .move-score-pts {
-        font-size: 1.1rem;
-        font-weight: 900;
-        color: #4ECDC4;
-        min-width: 36px;
-      }
-      .move-score-label { font-size: 0.78rem; font-weight: 600; color: #f0f0f0; }
+      .move-score-pts { font-size: 1.1rem; font-weight: 900; color: #111; min-width: 36px; }
+      .move-score-label { font-size: 0.78rem; font-weight: 600; color: #111; }
       .move-score-desc  { font-size: 0.72rem; color: #6B7280; margin-top: 2px; }
 
-      /* Design system palette */
-      .move-palette {
-        display: flex;
-        gap: 12px;
-        margin: 0 0 28px 0;
-        flex-wrap: wrap;
+      /* Categorie missioni */
+      .move-cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 0 0 28px 0; }
+      .move-cat {
+        padding: 20px 16px;
+        border-radius: 10px;
+        border: 1px solid rgba(0,0,0,.08);
+        background: #fff;
       }
-      .move-swatch {
-        width: 56px;
-        height: 56px;
-        border-radius: 12px;
-        position: relative;
-      }
-      .move-swatch-label {
-        margin-top: 6px;
-        font-size: 0.55rem;
-        color: #6B7280;
-        letter-spacing: 0.06em;
-      }
+      .move-cat-icon { font-size: 1.4rem; margin-bottom: 8px; }
+      .move-cat-name { font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; }
+      .move-cat-count { font-size: 0.65rem; color: #6B7280; }
 
-      /* cs-text in dark context */
-      .cs-dark .cs-text { color: #9CA3AF; }
-      .cs-dark .cs-h2 { color: #f0f0f0; }
-      .cs-dark .cs-label { color: #6B7280; }
-      .cs-dark .cs-card { background: #141414; border-color: rgba(255,255,255,.08); }
-      .cs-dark .cs-card-title { color: #f0f0f0; }
-      .cs-dark .cs-card-text { color: #6B7280; }
+      /* Palette swatches */
+      .move-palette { display: flex; gap: 12px; margin: 0 0 28px 0; flex-wrap: wrap; }
+      .move-swatch { width: 56px; height: 56px; border-radius: 12px; }
+      .move-swatch-label { margin-top: 6px; font-size: 0.55rem; color: #6B7280; letter-spacing: 0.06em; }
 
-      /* Live badge */
+      /* Live badge nell'hero */
       .move-live-badge {
         display: inline-flex;
         align-items: center;
         gap: 8px;
         padding: 5px 14px 5px 10px;
-        background: rgba(78,205,196,.12);
-        border: 1px solid rgba(78,205,196,.25);
+        background: rgba(255,255,255,.15);
+        border: 1px solid rgba(255,255,255,.3);
         border-radius: 20px;
         font-size: 0.58rem;
         font-weight: 700;
         letter-spacing: 0.18em;
-        color: #4ECDC4;
+        color: #fff;
         margin-bottom: 20px;
+        backdrop-filter: blur(6px);
       }
       .move-live-badge::before {
         content: '';
@@ -173,15 +105,19 @@
         background: #4ECDC4;
         animation: pulse-dot 2s ease-in-out infinite;
       }
+      @keyframes pulse-dot {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50%       { opacity: 0.5; transform: scale(0.8); }
+      }
 
-      /* External link btn */
+      /* Bottone link esterno */
       .cs-external-btn {
         display: inline-flex;
         align-items: center;
         gap: 8px;
         padding: 12px 24px;
-        background: #4ECDC4;
-        color: #0a0a0a;
+        background: #111;
+        color: #fff;
         border-radius: 50px;
         font-size: 0.72rem;
         font-weight: 700;
@@ -190,7 +126,21 @@
         transition: opacity 0.2s;
         margin-top: 8px;
       }
-      .cs-external-btn:hover { opacity: 0.85; color: #0a0a0a; }
+      .cs-external-btn:hover { opacity: 0.75; color: #fff; }
+
+      /* Colori categoria */
+      .cat-eco { color: #5A8F5E; }
+      .cat-soc { color: #3B6FD4; }
+      .cat-ben { color: #C4823E; }
+      .cat-cre { color: #7A5EAD; }
+
+      @media (max-width: 680px) {
+        .move-stats { grid-template-columns: 1fr 1fr; }
+        .move-stat:nth-child(2) { border-right: none; }
+        .move-stat:nth-child(3) { border-right: 1px solid rgba(0,0,0,.08); border-top: 1px solid rgba(0,0,0,.08); }
+        .move-stat:nth-child(4) { border-top: 1px solid rgba(0,0,0,.08); }
+        .move-cats { grid-template-columns: 1fr 1fr; }
+      }
     </style>
   </head>
 
@@ -207,7 +157,7 @@
     <div class="cs-main">
 
       <!-- Hero -->
-      <div class="cs-hero cs-dark">
+      <div class="cs-hero">
         <img src="assets/img/jpg/move.jpg" alt="MOVE — Product Design">
         <div class="cs-hero-overlay">
           <div class="move-live-badge">LIVE · BETA PUBBLICA</div>
@@ -218,27 +168,26 @@
       </div>
 
       <!-- Overview -->
-      <div class="cs-overview" style="background:#0a0a0a; border-bottom: 1px solid rgba(255,255,255,.08);">
-        <div class="cs-overview-item" style="border-color: rgba(255,255,255,.08);">
-          <span class="cs-overview-label" style="color:#6B7280;">Ruolo</span>
-          <span class="cs-overview-val" style="color:#f0f0f0;">Product Designer &amp; Founder</span>
+      <div class="cs-overview">
+        <div class="cs-overview-item">
+          <span class="cs-overview-label">Ruolo</span>
+          <span class="cs-overview-val">Product Designer &amp; Founder</span>
         </div>
-        <div class="cs-overview-item" style="border-color: rgba(255,255,255,.08);">
-          <span class="cs-overview-label" style="color:#6B7280;">Anno</span>
-          <span class="cs-overview-val" style="color:#f0f0f0;">2025–presente</span>
+        <div class="cs-overview-item">
+          <span class="cs-overview-label">Anno</span>
+          <span class="cs-overview-val">2025–presente</span>
         </div>
-        <div class="cs-overview-item" style="border-color: rgba(255,255,255,.08);">
-          <span class="cs-overview-label" style="color:#6B7280;">Tipo</span>
-          <span class="cs-overview-val" style="color:#f0f0f0;">Mobile App · PWA</span>
+        <div class="cs-overview-item">
+          <span class="cs-overview-label">Tipo progetto</span>
+          <span class="cs-overview-val">Mobile App · PWA</span>
         </div>
-        <div class="cs-overview-item" style="border-color: rgba(255,255,255,.08);">
-          <span class="cs-overview-label" style="color:#6B7280;">Stack</span>
-          <span class="cs-overview-val" style="color:#f0f0f0;">React · Supabase · Vercel</span>
+        <div class="cs-overview-item">
+          <span class="cs-overview-label">Stack</span>
+          <span class="cs-overview-val">React · Supabase · Vercel</span>
         </div>
       </div>
 
-      <!-- Dark body -->
-      <div class="cs-dark" style="padding: 0;">
+      <!-- Body -->
       <div class="cs-body">
 
         <!-- Il problema -->
@@ -249,24 +198,24 @@
 
           <div class="move-stats">
             <div class="move-stat">
-              <div class="move-stat-val" style="color:#5B8DEF">57%</div>
+              <div class="move-stat-val" style="color:#3B6FD4">57%</div>
               <div class="move-stat-lbl">dei giovani europei si sente solo, anche se connesso</div>
             </div>
             <div class="move-stat">
-              <div class="move-stat-val" style="color:#E8A87C">15.2%</div>
+              <div class="move-stat-val" style="color:#C4823E">15.2%</div>
               <div class="move-stat-lbl">NEET in Italia — il doppio della media EU Nord</div>
             </div>
             <div class="move-stat">
-              <div class="move-stat-val" style="color:#9B7EC8">80%</div>
+              <div class="move-stat-val" style="color:#7A5EAD">80%</div>
               <div class="move-stat-lbl">dei 20-29enni vive con i genitori. Non per scelta.</div>
             </div>
             <div class="move-stat">
-              <div class="move-stat-val" style="color:#4ECDC4">70%</div>
+              <div class="move-stat-val" style="color:#2a9d95">70%</div>
               <div class="move-stat-lbl">dei giovani ha eco-ansia che interferisce col quotidiano</div>
             </div>
           </div>
 
-          <p class="cs-text" style="font-size:0.7rem; color:#4B5563; margin-top:-12px;">Fonti: Eurostat 2024, ISTAT 2024, Lancet 2021 / APA 2023</p>
+          <p class="cs-text" style="font-size:0.7rem; color:#9CA3AF; margin-top:-12px;">Fonti: Eurostat 2024, ISTAT 2024, Lancet 2021 / APA 2023</p>
         </div>
 
         <!-- Research -->
@@ -363,22 +312,22 @@
           <div class="move-cats">
             <div class="move-cat">
               <div class="move-cat-icon">💼</div>
-              <div class="move-cat-name move-eco">Economica</div>
+              <div class="move-cat-name cat-eco">Economica</div>
               <div class="move-cat-count">Lavoro, finanze, indipendenza</div>
             </div>
             <div class="move-cat">
               <div class="move-cat-icon">🤝</div>
-              <div class="move-cat-name move-soc">Sociale</div>
+              <div class="move-cat-name cat-soc">Sociale</div>
               <div class="move-cat-count">Connessioni, eventi, comunità</div>
             </div>
             <div class="move-cat">
               <div class="move-cat-icon">☀️</div>
-              <div class="move-cat-name move-ben">Benessere</div>
+              <div class="move-cat-name cat-ben">Benessere</div>
               <div class="move-cat-count">Salute mentale, routine, corpo</div>
             </div>
             <div class="move-cat">
               <div class="move-cat-icon">✍️</div>
-              <div class="move-cat-name move-cre">Crescita</div>
+              <div class="move-cat-name cat-cre">Crescita</div>
               <div class="move-cat-count">Scopo, identità, ambiente</div>
             </div>
           </div>
@@ -395,19 +344,19 @@
 
           <div class="cs-grid-2">
             <div class="cs-card">
-              <p class="cs-card-title">🗓️ Eventi reali · 51 città</p>
+              <p class="cs-card-title">Eventi reali · 51 città</p>
               <p class="cs-card-text">1.142+ eventi aggiornati ogni notte da PredictHQ API: concerti, talk, workshop, sport. Filtri per data, distanza e categoria. Solo gli eventi più rilevanti per il profilo in cima.</p>
             </div>
             <div class="cs-card">
-              <p class="cs-card-title">🤝 Connessioni per valore</p>
+              <p class="cs-card-title">Connessioni per valore</p>
               <p class="cs-card-text">Matching basato su skill condivise, missioni in comune e obiettivi. Chat 1-a-1. Niente swipe — solo persone reali con cose in comune.</p>
             </div>
             <div class="cs-card">
-              <p class="cs-card-title">📊 Radar 4 aree</p>
+              <p class="cs-card-title">Radar 4 aree</p>
               <p class="cs-card-text">Dashboard con radar chart che legge il profilo e mostra dove sei. Check-in giornaliero, streak, XP. Progresso misurabile, non intenzioni.</p>
             </div>
             <div class="cs-card">
-              <p class="cs-card-title">🔔 Notifiche smart</p>
+              <p class="cs-card-title">Notifiche smart</p>
               <p class="cs-card-text">Generate al login: streak a rischio, inattività, milestone XP, promemoria missioni dipendenza/salute. Contestuali al pattern dell'utente.</p>
             </div>
           </div>
@@ -425,12 +374,12 @@
 
           <div class="move-palette">
             <div>
-              <div class="move-swatch" style="background:#0a0a0a; border: 1px solid rgba(255,255,255,.12);"></div>
+              <div class="move-swatch" style="background:#0a0a0a;"></div>
               <div class="move-swatch-label">#0a0a0a<br>Background</div>
             </div>
             <div>
-              <div class="move-swatch" style="background:#141414;"></div>
-              <div class="move-swatch-label">#141414<br>Surface</div>
+              <div class="move-swatch" style="background:#1a1a1a; border: 1px solid rgba(0,0,0,.1);"></div>
+              <div class="move-swatch-label">#1a1a1a<br>Surface</div>
             </div>
             <div>
               <div class="move-swatch" style="background:#4ECDC4;"></div>
@@ -470,7 +419,7 @@
           </div>
         </div>
 
-        <!-- Lancio e stato -->
+        <!-- Lancio -->
         <div class="cs-block">
           <span class="cs-label">Lancio</span>
           <h2 class="cs-h2">PWA. Nessuno store.<br>Subito installabile.</h2>
@@ -502,7 +451,6 @@
           </div>
         </div>
 
-      </div>
       </div>
 
       <!-- Footer -->
